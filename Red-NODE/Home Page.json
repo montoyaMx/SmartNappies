@@ -1,0 +1,423 @@
+[
+    {
+        "id": "b3fdc751.2dfd98",
+        "type": "tab",
+        "label": "Home Page",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ecd7ef63.caae5",
+        "type": "function",
+        "z": "b3fdc751.2dfd98",
+        "name": "Activity",
+        "func": "\nif(msg.payload == 0) {  \n    msg.payload =  \"https://drive.google.com/uc?export=view&id=17sCCMfZsonkXbPOFQpHUu4rUwrTn2Vxo\";\n} \nif(msg.payload == 1) {\n    msg.payload = \"https://drive.google.com/uc?export=view&id=1UJIhAh1r5XOT-eqRLmL_gMgJh5NRBjqk\";\n}\nif(msg.payload == 2) {\n    msg.payload = \"https://drive.google.com/uc?export=view&id=1BUxyfymbNbpeckBoOOsKxqJzb-Te903u\";\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 400,
+        "y": 180,
+        "wires": [
+            [
+                "8f2ab5e0.122ad8"
+            ]
+        ]
+    },
+    {
+        "id": "8f2ab5e0.122ad8",
+        "type": "ui_template",
+        "z": "b3fdc751.2dfd98",
+        "group": "60eada0f.4726b4",
+        "name": "Status Display",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "format": "\n\n<img\n    ng-src= {{msg.payload}} \n    alt='Image not found' />\n\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 600,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dba1b304.3cd1e",
+        "type": "link in",
+        "z": "b3fdc751.2dfd98",
+        "name": "In-NapStatusHome",
+        "links": [
+            "6dfd8caf.e5db14"
+        ],
+        "x": 215,
+        "y": 180,
+        "wires": [
+            [
+                "ecd7ef63.caae5"
+            ]
+        ]
+    },
+    {
+        "id": "ec20fe8c.9159c",
+        "type": "function",
+        "z": "b3fdc751.2dfd98",
+        "name": "Wetness",
+        "func": "\nif(msg.payload) {  \n    msg.payload =  \"https://drive.google.com/uc?export=view&id=11uFWrHeh8g6dmcMRkNERQlkKRDBxtWbF\";\n} \nelse{\n    msg.payload = \"https://drive.google.com/uc?export=view&id=1v8O4mVtMet8Hke_Y6oBKBfvIt82lZTmn\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 400,
+        "y": 260,
+        "wires": [
+            [
+                "6396175a.f58538"
+            ]
+        ]
+    },
+    {
+        "id": "6396175a.f58538",
+        "type": "ui_template",
+        "z": "b3fdc751.2dfd98",
+        "group": "e7da2a96.ea0818",
+        "name": "Wet Display",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "format": "\n<img\n    ng-src= {{msg.payload}} \n    alt='Image not found' />\n\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 590,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a555854b.5a96d8",
+        "type": "debug",
+        "z": "b3fdc751.2dfd98",
+        "name": "Activity Status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 820,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "7c04a94c.6483a8",
+        "type": "ui_text",
+        "z": "b3fdc751.2dfd98",
+        "group": "13f6f21c.67cd1e",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Last Diaper",
+        "label": "Last Diaper Change: ",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "x": 710,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "1e8393dd.af25bc",
+        "type": "link in",
+        "z": "b3fdc751.2dfd98",
+        "name": "",
+        "links": [
+            "b09ddc20.dd41a"
+        ],
+        "x": 215,
+        "y": 260,
+        "wires": [
+            [
+                "ec20fe8c.9159c"
+            ]
+        ]
+    },
+    {
+        "id": "80ec3f4c.f6ccf",
+        "type": "debug",
+        "z": "b3fdc751.2dfd98",
+        "name": "Wetness status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 810,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6f573d9.512a2c4",
+        "type": "inject",
+        "z": "b3fdc751.2dfd98",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "4",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0",
+        "x": 150,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "820155bf.3d66b8",
+        "type": "inject",
+        "z": "b3fdc751.2dfd98",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "4",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "x": 150,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "89d01214.6286",
+        "type": "inject",
+        "z": "b3fdc751.2dfd98",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "9",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0",
+        "x": 150,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b85cc429.2fc288",
+        "type": "inject",
+        "z": "b3fdc751.2dfd98",
+        "name": "",
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "repeat": "9",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "x": 150,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "69df78b4.8d6a08",
+        "type": "inject",
+        "z": "b3fdc751.2dfd98",
+        "name": "",
+        "topic": "",
+        "payload": "2",
+        "payloadType": "num",
+        "repeat": "9",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "6",
+        "x": 150,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8f5d9194.2661f",
+        "type": "link in",
+        "z": "b3fdc751.2dfd98",
+        "name": "",
+        "links": [
+            "71614aa6.5aab64"
+        ],
+        "x": 280,
+        "y": 80,
+        "wires": [
+            [
+                "7c04a94c.6483a8"
+            ]
+        ]
+    },
+    {
+        "id": "48d872d5.5e239c",
+        "type": "change",
+        "z": "b3fdc751.2dfd98",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"Value\":\"Reset\"}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 400,
+        "wires": [
+            [
+                "4e1f1289.5ef15c",
+                "ea39407.220d6c"
+            ]
+        ]
+    },
+    {
+        "id": "4e1f1289.5ef15c",
+        "type": "mqtt out",
+        "z": "b3fdc751.2dfd98",
+        "name": "",
+        "topic": "iot-2/type/ESP8266/id/dev01/cmd/resetW/fmt/json",
+        "qos": "",
+        "retain": "",
+        "broker": "6d652a6.1f4bdd4",
+        "x": 940,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "d5f2fa81.da98b8",
+        "type": "ui_button",
+        "z": "b3fdc751.2dfd98",
+        "name": "ResetButton",
+        "group": "e7da2a96.ea0818",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Reset",
+        "tooltip": "Reset",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 350,
+        "y": 400,
+        "wires": [
+            [
+                "48d872d5.5e239c"
+            ]
+        ]
+    },
+    {
+        "id": "ea39407.220d6c",
+        "type": "debug",
+        "z": "b3fdc751.2dfd98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 820,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "60eada0f.4726b4",
+        "type": "ui_group",
+        "z": "",
+        "name": "Status",
+        "tab": "b0188e88.7112a",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "e7da2a96.ea0818",
+        "type": "ui_group",
+        "z": "",
+        "name": "Wet",
+        "tab": "b0188e88.7112a",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "13f6f21c.67cd1e",
+        "type": "ui_group",
+        "z": "",
+        "name": "Diaper Stadistics",
+        "tab": "b0188e88.7112a",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "6d652a6.1f4bdd4",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "whyeub.messaging.internetofthings.ibmcloud.com",
+        "port": "1883",
+        "tls": "1e908b69.dd2585",
+        "clientid": "a:whyeub:NapReader",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "b0188e88.7112a",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "1e908b69.dd2585",
+        "type": "tls-config",
+        "z": "",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "rootCA_certificate.pem",
+        "servername": "whyeub.messaging.internetofthings.ibmcloud.com",
+        "verifyservercert": true
+    }
+]

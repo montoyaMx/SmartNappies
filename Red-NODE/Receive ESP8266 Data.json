@@ -1,0 +1,380 @@
+[
+    {
+        "id": "28d54970.4b91b6",
+        "type": "tab",
+        "label": "Receive ESP8266 Data",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "12b3cbff.57fe54",
+        "type": "mqtt in",
+        "z": "28d54970.4b91b6",
+        "name": "",
+        "topic": "iot-2/type/+/id/+/evt/+/fmt/json",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "6d652a6.1f4bdd4",
+        "x": 120,
+        "y": 340,
+        "wires": [
+            [
+                "a03409ad.48c568",
+                "d38410f6.ad123",
+                "b6fb301f.7e7f"
+            ]
+        ]
+    },
+    {
+        "id": "a03409ad.48c568",
+        "type": "change",
+        "z": "28d54970.4b91b6",
+        "name": "Extract Wet",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.d.wet",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 340,
+        "wires": [
+            [
+                "b72a7ee2.75cc1",
+                "b09ddc20.dd41a",
+                "c96a6c20.2f53b"
+            ]
+        ]
+    },
+    {
+        "id": "c96a6c20.2f53b",
+        "type": "debug",
+        "z": "28d54970.4b91b6",
+        "name": "Debug Wet",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 790,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "b72a7ee2.75cc1",
+        "type": "switch",
+        "z": "28d54970.4b91b6",
+        "name": "IsWet?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 200,
+        "wires": [
+            [
+                "291ac730.e9e058"
+            ]
+        ]
+    },
+    {
+        "id": "c7872594.ce5ac8",
+        "type": "ui_toast",
+        "z": "28d54970.4b91b6",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "Browser Alert Wet",
+        "x": 1030,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "291ac730.e9e058",
+        "type": "template",
+        "z": "28d54970.4b91b6",
+        "name": "Alert Message",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "The Nap is Wet!",
+        "output": "str",
+        "x": 820,
+        "y": 260,
+        "wires": [
+            [
+                "c7872594.ce5ac8",
+                "2182790c.0856c6"
+            ]
+        ]
+    },
+    {
+        "id": "2182790c.0856c6",
+        "type": "pushbullet",
+        "z": "28d54970.4b91b6",
+        "config": "49084c9e.c24a34",
+        "pushtype": "note",
+        "title": "Smart Nappies",
+        "chan": "",
+        "name": "Phone Notification",
+        "x": 1030,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b09ddc20.dd41a",
+        "type": "link out",
+        "z": "28d54970.4b91b6",
+        "name": "Out-WetStatus",
+        "links": [
+            "1e8393dd.af25bc",
+            "d95227f0.e419d8",
+            "4651a9b5.508b48"
+        ],
+        "x": 660,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "60d91f69.c1ef3",
+        "type": "ui_template",
+        "z": "28d54970.4b91b6",
+        "group": "80e44747.587f98",
+        "name": "Style",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n    \n    body {\n        background-image:\n    }\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "global",
+        "x": 110,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d38410f6.ad123",
+        "type": "function",
+        "z": "28d54970.4b91b6",
+        "name": "Format Time Series DB record",
+        "func": "msg.payload = {\n        time:     new Date().getTime(),\n        wet:     msg.payload.d.wet,\n        stat:    msg.payload.d.stat\n    } ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 680,
+        "wires": [
+            [
+                "5077697f.4e83a8"
+            ]
+        ]
+    },
+    {
+        "id": "3cbc7392.e0cdec",
+        "type": "debug",
+        "z": "28d54970.4b91b6",
+        "name": "Storage Message",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 790,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "5077697f.4e83a8",
+        "type": "cloudant out",
+        "z": "28d54970.4b91b6",
+        "name": "",
+        "cloudant": "",
+        "database": "historicaldata",
+        "service": "IBM workshop TJS-cloudantNoSQLDB",
+        "payonly": true,
+        "operation": "insert",
+        "x": 770,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "a3170c56.ee854",
+        "type": "comment",
+        "z": "28d54970.4b91b6",
+        "name": "Database Storage",
+        "info": "",
+        "x": 450,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "b6fb301f.7e7f",
+        "type": "change",
+        "z": "28d54970.4b91b6",
+        "name": "Extract Status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.d.stat",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 500,
+        "wires": [
+            [
+                "6dfd8caf.e5db14"
+            ]
+        ]
+    },
+    {
+        "id": "b5eae8f1.d22f38",
+        "type": "debug",
+        "z": "28d54970.4b91b6",
+        "name": "Debug Status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 760,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "6dfd8caf.e5db14",
+        "type": "link out",
+        "z": "28d54970.4b91b6",
+        "name": "Out-NapStatus",
+        "links": [
+            "dba1b304.3cd1e",
+            "4651a9b5.508b48"
+        ],
+        "x": 675,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "2053c139.520d5e",
+        "type": "comment",
+        "z": "28d54970.4b91b6",
+        "name": "Flow with the input from the ESP8266",
+        "info": "",
+        "x": 150,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "c1ca53a6.15869",
+        "type": "inject",
+        "z": "28d54970.4b91b6",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 600,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6d652a6.1f4bdd4",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "whyeub.messaging.internetofthings.ibmcloud.com",
+        "port": "1883",
+        "tls": "1e908b69.dd2585",
+        "clientid": "a:whyeub:NapReader",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "49084c9e.c24a34",
+        "type": "pushbullet-config",
+        "z": "",
+        "name": "Jose's Phone"
+    },
+    {
+        "id": "80e44747.587f98",
+        "type": "ui_group",
+        "z": "",
+        "name": "Pie Chart Examples",
+        "tab": "e5e509db.d715b8",
+        "order": 2,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "1e908b69.dd2585",
+        "type": "tls-config",
+        "z": "",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "rootCA_certificate.pem",
+        "servername": "whyeub.messaging.internetofthings.ibmcloud.com",
+        "verifyservercert": true
+    },
+    {
+        "id": "e5e509db.d715b8",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Chart Examples",
+        "icon": "fa-area-chart",
+        "order": 4,
+        "disabled": true,
+        "hidden": true
+    }
+]
